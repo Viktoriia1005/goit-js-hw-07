@@ -1,8 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-// Создание и рендер разметки
-
 const galleryElements = document.querySelector('.gallery');
 const createGalleryItemMarkup = ({preview, original, description}) =>
 `
@@ -18,7 +16,5 @@ const createGalleryItemMarkup = ({preview, original, description}) =>
 </div>
 `;
 
-const makeGalleryMarkup = galleryItems.map(createGalleryItemMarkup).join('');
-
-galleryElements.innerHTML = makeGalleryMarkup;
+galleryElements.innerHTML = galleryItems.map(createGalleryItemMarkup).join('');
 // console.log(galleryItems);
