@@ -1,6 +1,5 @@
 import { galleryItems } from './gallery-items.js';
 
-
 // Создание и рендер разметки по массиву данных
 
 const galleryList = document.querySelector('.gallery');
@@ -19,17 +18,21 @@ const createGalleryItemMarkup = ({preview, original, description}) =>
 </div>
 `;
 
-galleryList.innerHTML = galleryItems.map(createGalleryItemMarkup).join('');
+const createGalleryMarkup = galleryItems.map(createGalleryItemMarkup).join('');
+galleryList.insertAdjacentHTML('beforeend', createGalleryMarkup)
 
 // Открытие модального окна по клику на элементе галереи, закрытие при нажатии Esc
 
 function modalWindow(src) {
+  const onEscPress = event => {
+    if (event.code === 'Escape') {
+      instance.close();
+    }
+  }
   const instance = basicLightbox.create(
     `
-    <div class="modal">
-        <img src="${src}"></img>
-    </div>
-`,
+      <img src="${src}"></img>
+    `,
     {
       onShow: instance => {
         window.addEventListener('keydown', onEscPress);
@@ -42,19 +45,12 @@ function modalWindow(src) {
   instance.show();
 }
 
-function onEscPress(event) {
-  if (event.code === 'Escape') {
-    instance.close();
-  }
-}
-
 function onGalleryClick (event) {
   if (!event.target.classList.contains('gallery__image')) {
     return;
   }
   event.preventDefault();
   modalWindow(event.target.dataset.source);
-
 }
 
 galleryList.addEventListener('click', onGalleryClick)
